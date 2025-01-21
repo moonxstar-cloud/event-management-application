@@ -79,7 +79,7 @@ const AllEvent = async(req, res) => {
 }
 const Discover = async(req, res) => {
     try {
-        
+        const now = new Date();
         const events = await EventModel.find()
             .populate('creator', 'name email') // Populate creator details
             .populate('attendees', 'name email'); // Populate attendee details

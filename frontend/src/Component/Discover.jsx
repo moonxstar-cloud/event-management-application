@@ -31,11 +31,14 @@ const Discover = () => {
 
 
   const filteredEvents = useMemo(() => {
+    const now = new Date();
     return data?.events.filter(event => {
+      const eventEndDate = new Date(event.endDate);
       const matchesSearch = event.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                             event.location?.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = selectedCategory === 'all' || event.category === selectedCategory;
-      return matchesSearch && matchesCategory;
+      const isUpcoming = eventEndDate >= now; // Only show events that haven't ended yet
+      return matchesSearch && matchesCategory && isUpcoming;
     });
   }, [data, searchQuery, selectedCategory]);
 
