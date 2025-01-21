@@ -19,12 +19,34 @@ function Login() {
                 email,
                 password
             });
+            console.log('Login response:', response);
+            console.log('response.data.user:', response.data);
             return response.data;
         },
+        // onSuccess: (data) => {
+        //     console.log('Login data:', data.user); // Add this line
+           
+        //     dispatch(login({ user: data.user, token: data.token }));
+        //     localStorage.setItem('token', data.token); // Store the token in local storage
+        //     navigate('/event');
+        // },
         onSuccess: (data) => {
-            dispatch(login({ user: data.user, token: data.token }));
-            navigate('/home');
+            const userData = data.user;
+            
+            
+            // Dispatch login action with both user and token
+            dispatch(login({ 
+                user: userData,
+                token: data.token 
+            }));
+            
+            // Store both token and user in localStorage
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(userData));
+            
+            navigate('/');
         },
+        
         onError: (error) => {
             console.error("Login failed:", error);
         }
@@ -103,7 +125,7 @@ function Login() {
                             </button>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                 Don't have an account yet?{' '}
-                                <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                                <a href="#"   onClick={() => navigate('/register')} className="font-medium text-primary-600 hover:underline dark:text-primary-500">
                                     Register here
                                 </a>
                             </p>
