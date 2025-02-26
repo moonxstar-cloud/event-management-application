@@ -1,6 +1,6 @@
 const EventModel = require("../Models/EventModel");
 const NotificationModel = require("../Models/NotificationModel");
-const cloudinary = require("./cloudinaryConfig");
+const cloudinary = require("./cloudinaryconfig");
 
 // Function to upload image to Cloudinary
 const uploadImageToCloudinary = (file) => {
