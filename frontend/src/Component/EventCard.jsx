@@ -107,7 +107,7 @@ const EventCard = ({ event, onClose }) => {
     <div className="aspect-square w-full bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500 rounded-lg overflow-hidden">
       {event.image ? (
         <img
-          src={`http://localhost:8080/uploads/events/${event.image.filename}`}
+          src={event.image.url}
           alt={event.name}
           className="w-full h-full object-cover"
         />
