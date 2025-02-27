@@ -131,7 +131,7 @@ const Discover = () => {
                 >
                   {event.image ? (
                     <img
-                      src={`http://localhost:8080/uploads/events/${event.image.filename}`}
+                      src={event.image.url}
                       alt={event.name}
                       className="w-full h-48 object-cover"
                     />
