@@ -150,7 +150,7 @@ const Home = () => {
                     <div className="w-16 h-16 bg-gray-100 rounded-lg flex-shrink-0">
                       {event.image ? (
                         <img
-                          src={`http://localhost:8080/uploads/events/${event.image.filename}`}
+                          src={event.image.url}
                           alt={event.name}
                           className="w-full h-full object-cover rounded-lg"
                         />
@@ -208,7 +208,7 @@ const Home = () => {
                     <div className="w-16 h-16 bg-gray-100 rounded-lg flex-shrink-0">
                       {event.image ? (
                         <img
-                          src={`http://localhost:8080/uploads/events/${event.image.filename}`}
+                          src={event.image.url}
                           alt={event.name}
                           className="w-full h-full object-cover rounded-lg"
                         />
