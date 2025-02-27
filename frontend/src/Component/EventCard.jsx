@@ -88,7 +88,7 @@ const EventCard = ({ event, onClose }) => {
   };
   const handleAccept = async () => {
     try {
-      const response = await axios.post(`http://localhost:8080/luma/events/${event._id}/accept`, {
+      const response = await axios.post(`https://backend-luma.vercel.app/luma/events/${event._id}/accept`, {
         // Add any additional data you want to send with the acceptance request
       });
 
