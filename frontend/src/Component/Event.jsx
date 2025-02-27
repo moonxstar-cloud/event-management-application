@@ -147,7 +147,7 @@ const Event = () => {
 
       console.log("FormData before fetch:", JSON.stringify(formData));
       // Make the API call
-      const response = await fetch("http://localhost:8080/luma/create", {
+      const response = await fetch("https://backend-luma.vercel.app/luma/create", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
