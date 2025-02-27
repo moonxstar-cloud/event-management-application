@@ -57,7 +57,7 @@ const EventCard = ({ event, onClose }) => {
     setError(null);
 
     try {
-      const response = await fetch(`http://localhost:8080/luma/events/${event._id}/register`, {
+      const response = await fetch(`https://backend-luma.vercel.app/luma/events/${event._id}/register`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
