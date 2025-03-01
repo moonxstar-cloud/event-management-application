@@ -12,7 +12,7 @@ import Discover from './Component/Discover'
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-
+import { Navigate } from 'react-router-dom';
 
 function App() {
   const { user } = useSelector((state) => state.auth)
@@ -37,7 +37,7 @@ const queryClient = new QueryClient({
             <Route path="/main" element={<Main />} />   
             <Route path="/discover" element={<Discover />} />         
             <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
             <Route path="/event" element={<Event />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>

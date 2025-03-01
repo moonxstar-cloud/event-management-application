@@ -32,8 +32,6 @@ function Login() {
         // },
         onSuccess: (data) => {
             const userData = data.user;
-            
-            
             // Dispatch login action with both user and token
             dispatch(login({ 
                 user: userData,
@@ -43,6 +41,9 @@ function Login() {
             // Store both token and user in localStorage
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(userData));
+            
+            setEmail('');
+            setPassword('');
             
             navigate('/');
         },

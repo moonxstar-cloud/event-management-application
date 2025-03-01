@@ -15,13 +15,20 @@ import { Alert, AlertDescription } from "../Component/ui/alert";
 import Header from "./Header";
 
 const Event = () => {
+  const getNextHourTime = (offset = 0) => {
+    const now = new Date();
+    now.setMinutes(0, 0, 0);
+    now.setHours(now.getHours() + offset);
+    return now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+  };
+
   const [eventData, setEventData] = useState({
     name: "",
-    startDate: "2025-01-20",
-    startTime: "10:00",
-    endDate: "2025-01-20",
-    endTime: "14:00",
-    timezone: "GMT+05:00",
+    startDate: new Date().toISOString().split('T')[0],
+    startTime: getNextHourTime(1),  // Start time at the next hour
+    endDate: new Date(new Date().getTime() + 86400000).toISOString().split('T')[0],
+    endTime:  getNextHourTime(2),  // Start time at the next hour
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     location: "",
     description: "",
     isPublic: true,
