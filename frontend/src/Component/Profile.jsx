@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Header from "./Header";
 import useEvents from "../hooks/useEvents";
 import EventCard from "./EventCard";
+import moment from 'moment';
 const Profile = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
@@ -84,7 +85,7 @@ const Profile = () => {
               </h1>
               <p className="text-gray-500">
                 Member since{" "}
-                {new Date(profileData.joinDate).toLocaleDateString()}
+                {moment(user.createdAt).format('MMMM , YYYY')}
               </p>
             </div>
           </div>

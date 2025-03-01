@@ -23,7 +23,7 @@
 //     new Date().toLocaleTimeString()
 //   );
 //   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  
+
 //   const [showNotifications, setShowNotifications] = useState(false);
 
 //   useEffect(() => {
@@ -81,7 +81,6 @@
 //     }
 //   }, [user, location.pathname]);
 
-
 //   const handleCreateEvent = () => {
 //     if (!user) {
 //       navigate("/login", { state: { from: location.pathname } });
@@ -124,7 +123,7 @@
 //         </div>
 
 //         <div className="flex items-center space-x-3">
-//           <Link to="/discover"> 
+//           <Link to="/discover">
 //           <button
 //            onClick={handleDiscoverEvents}
 //             className="bg-blue-50 hover:bg-blue-100 text-blue-600 px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors"
@@ -133,7 +132,6 @@
 //             <span className="hidden md:inline">Explore Events</span>
 //           </button>
 //           </Link>
-          
 
 //           <button
 //             onClick={handleCreateEvent}
@@ -276,13 +274,15 @@ import {
   Calendar,
   User,
   LogOut,
+  LogIn,
   Compass,
   Bell,
 } from "lucide-react";
-import useNotification from '../hooks/useNotification';
-
+import useNotification from "../hooks/useNotification";
+import { FiLogIn } from "react-icons/fi";
 const Header = () => {
-  const { notifications , handleNotificationAction, isLoading } = useNotification();
+  const { notifications, handleNotificationAction, isLoading } =
+    useNotification();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -330,7 +330,7 @@ const Header = () => {
   };
 
   const handleDiscoverEvents = () => {
-    queryClient.invalidateQueries(['discover-events']);
+    queryClient.invalidateQueries(["discover-events"]);
     navigate("/discover");
   };
 
@@ -343,7 +343,7 @@ const Header = () => {
   };
 
   const handleHome = () => {
-    queryClient.invalidateQueries(['events']);
+    queryClient.invalidateQueries(["events"]);
     navigate("/");
   };
 
@@ -357,7 +357,11 @@ const Header = () => {
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-6">
-            <Link to="/" onClick={handleHome} className="flex items-center space-x-2 group">
+            <Link
+              to="/"
+              onClick={handleHome}
+              className="flex items-center space-x-2 group"
+            >
               <h1 className="text-2xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
                 Event Manager
               </h1>
@@ -394,7 +398,7 @@ const Header = () => {
                 >
                   <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
                     <span className="text-sm font-medium text-blue-600">
-                      {(user?.name?.[0] || "U")}
+                      {user?.name?.[0] || "U"}
                     </span>
                   </div>
                   <span className="hidden md:inline font-medium text-gray-700">
@@ -438,7 +442,7 @@ const Header = () => {
                                 onClick={() =>
                                   handleNotificationClick(
                                     notification._id,
-                                    'accept',
+                                    "accept",
                                     notification.event._id
                                   )
                                 }
@@ -450,7 +454,7 @@ const Header = () => {
                                 onClick={() =>
                                   handleNotificationClick(
                                     notification._id,
-                                    'reject',
+                                    "reject",
                                     notification.event._id
                                   )
                                 }
@@ -472,11 +476,13 @@ const Header = () => {
                       <div className="flex items-center space-x-3 mb-4">
                         <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
                           <span className="text-lg font-medium text-blue-600">
-                            {(user?.name?.[0] || "U")}
+                            {user?.name?.[0] || "U"}
                           </span>
                         </div>
                         <div>
-                          <h3 className="font-medium text-gray-800">{user.name}</h3>
+                          <h3 className="font-medium text-gray-800">
+                            {user.name}
+                          </h3>
                           <p className="text-sm text-gray-500">{user.email}</p>
                         </div>
                       </div>
@@ -504,9 +510,10 @@ const Header = () => {
             ) : (
               <button
                 onClick={() => navigate("/login")}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors shadow-sm hover:shadow-md font-medium"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors shadow-sm hover:shadow-md"
               >
-                Log In
+                <LogIn className="w-5 h-5" />
+                <span className="hidden md:inline">Log In</span>
               </button>
             )}
           </div>
