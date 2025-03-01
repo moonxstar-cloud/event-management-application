@@ -278,6 +278,7 @@ import {
   Compass,
   Bell,
 } from "lucide-react";
+import moment from 'moment';
 import useNotification from "../hooks/useNotification";
 import { FiLogIn } from "react-icons/fi";
 const Header = () => {
@@ -289,7 +290,7 @@ const Header = () => {
   const queryClient = new QueryClient();
   const { user } = useSelector((state) => state.auth);
   const [currentTime, setCurrentTime] = useState(
-    new Date().toLocaleTimeString()
+    moment().format('hh:mm A [GMT]Z')
   );
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -314,8 +315,8 @@ const Header = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCurrentTime(new Date().toLocaleTimeString());
-    }, 1000);
+      setCurrentTime(moment().format('hh:mm A [GMT]Z'));
+    },  1000);
     return () => clearInterval(intervalId);
   }, []);
 
