@@ -19,15 +19,20 @@ const Event = () => {
     const now = new Date();
     now.setMinutes(0, 0, 0);
     now.setHours(now.getHours() + offset);
-    return now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+    return now.toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
 
   const [eventData, setEventData] = useState({
     name: "",
-    startDate: new Date().toISOString().split('T')[0],
-    startTime: getNextHourTime(1),  // Start time at the next hour
-    endDate: new Date(new Date().getTime() + 86400000).toISOString().split('T')[0],
-    endTime:  getNextHourTime(2),  // Start time at the next hour
+    startDate: new Date().toISOString().split("T")[0],
+    startTime: getNextHourTime(1), // Start time at the next hour
+    endDate: new Date(new Date().getTime() + 86400000)
+      .toISOString()
+      .split("T")[0],
+    endTime: getNextHourTime(2), // Start time at the next hour
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     location: "",
     description: "",
@@ -154,13 +159,16 @@ const Event = () => {
 
       console.log("FormData before fetch:", JSON.stringify(formData));
       // Make the API call
-      const response = await fetch("https://backend-luma.vercel.app/luma/create", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        "https://backend-luma.vercel.app/luma/create",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
       console.log("FormData entries:");
       // Log FormData contents for debugging
       for (let pair of formData.entries()) {
@@ -218,12 +226,12 @@ const Event = () => {
   });
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <Header/>
+      <Header />
       <div className="max-w-3xl lg:max-w-5xl mx-auto flex flex-col lg:flex-row gap-8">
         {/* Image Preview Section */}
         <div className="w-full lg:w-2/5">
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div className="aspect-w-16 aspect-h-14 bg-gray-100">
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-300">
+            <div className="aspect-w-16 aspect-h-14 bg-gradient-to-br from-gray-50 to-gray-100">
               {previewImage ? (
                 <img
                   src={previewImage}
@@ -231,23 +239,23 @@ const Event = () => {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <div className="w-full h-64 flex items-center justify-center bg-gray-100">
+                <div className="w-full h-64 flex items-center justify-center space-y-3">
                   <ImageIcon className="w-12 h-12 text-gray-400" />
                 </div>
               )}
             </div>
-            <div className="p-4 border-t">
+            <div className="p-4 border-t border-gray-300">
               <div className="flex justify-between items-center">
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gray-100 rounded-md flex items-center justify-center">
+                  <div className="w-10 h-10 bg-gray-100 rounded-md flex items-center justify-center border border-gray-300">
                     <ImageIcon className="w-6 h-6 text-gray-500" />
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Theme</p>
-                    <p className="font-medium">Pattern</p>
+                    <p className="font-medium text-gray-900">Pattern</p>
                   </div>
                 </div>
-                <label className="cursor-pointer bg-gray-100 hover:bg-gray-200 transition-colors rounded-md p-2">
+                <label className="cursor-pointer bg-gray-100 hover:bg-gray-200 transition-colors rounded-md p-2.5 border border-gray-300">
                   <Upload className="w-5 h-5 text-gray-600" />
                   <input
                     type="file"
@@ -278,19 +286,19 @@ const Event = () => {
 
           <form
             onSubmit={handleSubmit}
-            className="bg-white rounded-lg shadow-sm p-6"
+            className="bg-white rounded-lg shadow-sm p-6 border border-gray-300"
           >
             {/* Header Controls */}
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center space-x-3">
+            <div className="flex flex-wrap items-center justify-between  gap-3 mb-6">
+              <div className="flex items-center space-x-3 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-300">
                 <div className="flex items-center space-x-2 bg-gray-100 px-3 py-1.5 rounded-md">
-                  <Calendar className="w-4 h-4 text-gray-500" />
+                  <Calendar className="w-4 h-4 text-gray-600" />
                   <span className="text-sm text-gray-600">
                     Personal Calendar
                   </span>
                 </div>
               </div>
-              <div className="flex items-center space-x-2 bg-gray-100 px-3 py-1.5 rounded-md">
+              <div className="flex items-center space-x-2 bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-300">
                 <Globe className="w-4 h-4 text-gray-500" />
                 <select
                   className="bg-transparent text-sm text-gray-600 border-none focus:ring-0"
@@ -311,103 +319,135 @@ const Event = () => {
             </div>
 
             {/* Event Name */}
-            <input
-              type="text"
-              name="name"
-              placeholder="Event name"
-              className="w-full text-3xl font-semibold border-none focus:ring-0 focus:border-none mb-6"
-              value={eventData.name}
-              onChange={handleChange}
-            />
+            <div className="relative mb-8">
+  <input
+    type="text"
+    name="name"
+    id="eventName"
+    placeholder=" "
+    className="w-full pt-6 pb-2 text-3xl font-semibold border-b-2 border-gray-300 focus:border-blue-600 focus:outline-none peer bg-transparent"
+    value={eventData.name}
+    onChange={handleChange}
+  />
+  <label 
+    htmlFor="eventName"
+    className="absolute left-0 -top-1 text-gray-500 text-sm font-medium transition-all transform
+              peer-placeholder-shown:text-base 
+              peer-placeholder-shown:text-gray-400
+              peer-placeholder-shown:font-normal
+              peer-placeholder-shown:translate-y-[2.1rem]
+              peer-focus:-translate-y-0
+              peer-focus:text-sm
+              peer-focus:text-blue-600"
+  >
+    Event Title
+  </label>
+</div>
 
             {/* Date Time Section */}
-            <div className="bg-gray-50 p-4 rounded-lg space-y-4 mb-6">
-              <div className="grid grid-cols-[80px,1fr] items-center">
-                <span className="text-gray-600">Start</span>
-                <div className="flex gap-4">
+            <div className="bg-gray-50 p-4 rounded-lg space-y-4  mb-6 border border-gray-300 ">
+              <div className="grid grid-cols-[80px,1fr] max-[425px]:grid-cols-1 items-center gap-4">
+                <span className=" bg-blue-600 text-white border-2 text-center  px-2 py-1 rounded-md max-[425px]:mb-2 font-medium">
+                  Start
+                </span>
+                <div className="flex gap-4 max-[425px]:flex-col max-[425px]:gap-2 ">
                   <input
                     type="date"
                     name="startDate"
-                    className="bg-transparent border-none focus:ring-0"
+                    className="bg-transparent border-none focus:ring-0 max-[425px]:w-full"
                     value={eventData.startDate}
                     onChange={handleChange}
                   />
                   <input
                     type="time"
                     name="startTime"
-                    className="bg-transparent border-none focus:ring-0"
+                    className="bg-transparent border-none focus:ring-0 max-[425px]:w-full"
                     value={eventData.startTime}
                     onChange={handleChange}
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-[80px,1fr] items-center">
-                <span className="text-gray-600">End</span>
-                <div className="flex gap-4">
+              <div className="grid grid-cols-[80px,1fr] max-[425px]:grid-cols-1  items-center gap-4">
+                <span className="bg-blue-600 text-white border-2 text-center px-2 py-1 rounded-md max-[425px]:mb-2 font-medium">
+                  End
+                </span>
+                <div className="flex gap-4 max-[425px]:flex-col max-[425px]:gap-2">
                   <input
                     type="date"
                     name="endDate"
-                    className="bg-transparent border-none focus:ring-0"
+                    className="bg-transparent border-none focus:ring-0  max-[425px]:w-full"
                     value={eventData.endDate}
                     onChange={handleChange}
                   />
                   <input
                     type="time"
                     name="endTime"
-                    className="bg-transparent border-none focus:ring-0"
+                    className="bg-transparent border-none focus:ring-0  max-[425px]:w-full"
                     value={eventData.endTime}
                     onChange={handleChange}
                   />
                 </div>
               </div>
 
-              <div className="flex justify-end items-center gap-2">
-                <Clock className="w-4 h-4 text-gray-400" />
-                <select
-                  name="timezone"
-                  className="text-sm bg-transparent border-none focus:ring-0"
-                  value={eventData.timezone}
-                  onChange={handleChange}
-                >
-                  <option value="GMT+05:00">GMT+05:00 Karachi</option>
-                  <option value="GMT+00:00">GMT+00:00 London</option>
-                  <option value="GMT-05:00">GMT-05:00 New York</option>
-                </select>
+              <div className="flex justify-end items-center gap-2 max-[425px]:flex-col max-[425px]:items-start">
+                <div className="flex items-center gap-2 max-[425px]:w-full">
+                  <Clock className="w-4 h-4 text-gray-400" />
+                  <select
+                    name="timezone"
+                    className="text-sm bg-transparent border-none focus:ring-0 max-[425px]:w-full"
+                    value={eventData.timezone}
+                    onChange={handleChange}
+                  >
+                    <option value="GMT+05:00">GMT+05:00 Karachi</option>
+                    <option value="GMT+00:00">GMT+00:00 London</option>
+                    <option value="GMT-05:00">GMT-05:00 New York</option>
+                  </select>
+                </div>
               </div>
             </div>
 
             {/* Location */}
             <div className="space-y-4 mb-6">
-              <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
-                <MapPin className="w-5 h-5 text-gray-400" />
-                <input
-                  type="text"
-                  name="location"
-                  placeholder="Add location (optional)"
-                  className="w-full bg-transparent border-none focus:ring-0"
-                  value={eventData.location}
-                  onChange={handleChange}
-                />
-              </div>
+  {/* Location Input */}
+  <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-xl border border-gray-300
+                  transition-colors hover:border-gray-400
+                  focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100">
+    <MapPin className="w-5 h-5 text-gray-400 flex-shrink-0 transition-colors group-focus-within:text-blue-500" />
+    <input
+      type="text"
+      name="location"
+      placeholder="Add location or online meeting link"
+      className="w-full bg-transparent placeholder-gray-400/80 outline-none
+                text-gray-700 focus:placeholder-gray-400"
+      value={eventData.location}
+      onChange={handleChange}
+    />
+  </div>
 
-              {/* Description */}
-              <div className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg">
-                <FileText className="w-5 h-5 text-gray-400 mt-1" />
-                <textarea
-                  name="description"
-                  placeholder="Add description (optional)"
-                  rows="3"
-                  className="w-full bg-transparent border-none focus:ring-0 resize-none"
-                  value={eventData.description}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
+  {/* Description Textarea */}
+  <div className="flex items-start space-x-3 p-4 bg-gray-50 rounded-xl border border-gray-300
+                  transition-colors hover:border-gray-400
+                  focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100">
+    <FileText className="w-5 h-5 text-gray-400 mt-1 flex-shrink-0 transition-colors group-focus-within:text-blue-500" />
+    <textarea
+      name="description"
+      placeholder="Tell attendees what to expect..."
+      rows="3"
+      className="w-full bg-transparent resize-none outline-none
+                text-gray-700 placeholder-gray-400/80 focus:placeholder-gray-400
+                scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent"
+      value={eventData.description}
+      onChange={handleChange}
+    />
+  </div>
+</div>
 
             {/* Event Options */}
-            <div className="space-y-6">
-              <h3 className="font-semibold text-gray-900">Event Options</h3>
+            <div className="space-y-6 p-5 bg-gray-50 rounded-xl border border-gray-300">
+              <h3 className="font-semibold text-gray-900 text-lg">
+                Event Options
+              </h3>
 
               {/* Tickets */}
               <div className="flex items-center justify-between">
@@ -415,10 +455,10 @@ const Event = () => {
                   <Ticket className="w-5 h-5 text-gray-400" />
                   <span className="text-gray-600">Tickets</span>
                 </div>
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center gap-3">
                   <select
                     name="tickets"
-                    className="border-gray-200 rounded-md"
+                    className="border-gray-200 rounded-lg px-3 py-1.5 bg-white"
                     value={eventData.tickets}
                     onChange={handleChange}
                   >
